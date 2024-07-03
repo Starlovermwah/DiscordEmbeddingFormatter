@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Movie Link Generator</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        padding: 20px;
+    }
+    .form-container {
+        max-width: 500px;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: 0 auto;
+    }
+    .form-container h2 {
+        text-align: center;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .form-group label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+    .form-group input[type="text"] {
+        width: calc(100% - 12px);
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    .form-group input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .generated-url {
+        background-color: #f0f0f0;
+        padding: 15px;
+        border-radius: 5px;
+        margin-top: 15px;
+        font-size: 14px;
+        line-height: 1.6;
+        overflow-wrap: break-word;
+    }
+</style>
+</head>
+<body>
+<div class="form-container">
+    <h2>Movie Link Generator</h2>
+    <form id="movieForm">
+        <div class="form-group">
+            <label for="movieTitle">Movie Title:</label>
+            <input type="text" id="movieTitle" name="movieTitle" required>
+        </div>
+        <div class="form-group">
+            <label for="movieLink">Movie Link:</label>
+            <input type="text" id="movieLink" name="movieLink" required>
+        </div>
+        <div class="form-group">
+            <label for="movieImageLink">Movie Image Link:</label>
+            <input type="text" id="movieImageLink" name="movieImageLink" required>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Generate Movie URL">
+        </div>
+    </form>
+    <div id="result" class="generated-url" style="display: none;">
+        <!-- Generated Movie URL will appear here -->
+    </div>
+</div>
+
+<script>
+    document.getElementById('movieForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var movieTitle = document.getElementById('movieTitle').value;
+        var movieLink = document.getElementById('movieLink').value;
+        var movieImageLink = document.getElementById('movieImageLink').value;
+
+        // Encode the parameters in the URL
+        var encodedMovieLink = encodeURIComponent(movieLink).replace(/%3A/g, ':').replace(/%2F/g, '/');
+        var encodedMovieImageLink = encodeURIComponent(movieImageLink).replace(/%3A/g, ':').replace(/%2F/g, '/');
+
+        // Construct the URL string with proper formatting
+        var generatedURL = '[' + movieTitle + '](https://discord.nfp.is/?v=' + encodedMovieLink + '&i=' + encodedMovieImageLink + ')';
+
+        var resultContainer = document.getElementById('result');
+        resultContainer.textContent = generatedURL;
+        resultContainer.style.display = 'block';
+    });
+</script>
+
+</body>
+</html>
