@@ -98,11 +98,9 @@
         var movieLink = document.getElementById('movieLink').value;
         var movieImageLink = document.getElementById('movieImageLink').value;
 
-        // Encode the parameters in the URL
         var encodedMovieLink = encodeURIComponent(movieLink).replace(/%3A/g, ':').replace(/%2F/g, '/');
         var encodedMovieImageLink = encodeURIComponent(movieImageLink).replace(/%3A/g, ':').replace(/%2F/g, '/');
 
-        // Construct the URL string with proper formatting
         var generatedURL = '[' + movieTitle + '](https://discord.nfp.is/?v=' + encodedMovieLink + '&i=' + encodedMovieImageLink + ')';
 
         var resultContainer = document.getElementById('result');
