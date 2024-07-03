@@ -10,12 +10,12 @@
         background: url('https://i.ibb.co/5FXNrGJ/OIG1.jpg') no-repeat center center fixed;
         background-size: cover;
         background-color: #000;
-        color: #fff; /* White text */
+        color: #fff; 
         padding: 20px;
     }
     .form-container {
         max-width: 500px;
-        background-color: rgba(0, 0, 0, 0.8); /* Transparent black background */
+        background-color: rgba(0, 0, 0, 0.8); 
         border-radius: 10px;
         padding: 20px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -38,12 +38,12 @@
         border: 1px solid #fff; /* White border */
         border-radius: 5px;
         font-size: 16px;
-        background-color: rgba(255, 255, 255, 0.2); /* Transparent white background */
-        color: #fff; /* White text */
+        background-color: rgba(255, 255, 255, 0.2); 
+        color: #fff; 
     }
     .form-group input[type="submit"] {
-        background-color: #fff; /* White background */
-        color: #000; /* Black text */
+        background-color: #fff; 
+        color: #000; 
         border: none;
         padding: 10px 20px;
         text-align: center;
@@ -54,14 +54,14 @@
         cursor: pointer;
     }
     .generated-url {
-        background-color: rgba(0, 0, 0, 0.5); /* Transparent black background */
+        background-color: rgba(0, 0, 0, 0.5); 
         padding: 15px;
         border-radius: 5px;
         margin-top: 15px;
         font-size: 14px;
         line-height: 1.6;
         overflow-wrap: break-word;
-        color: #fff; /* White text */
+        color: #fff; 
     }
 </style>
 </head>
@@ -98,11 +98,9 @@
         var movieLink = document.getElementById('movieLink').value;
         var movieImageLink = document.getElementById('movieImageLink').value;
 
-        // Encode the parameters in the URL
         var encodedMovieLink = encodeURIComponent(movieLink).replace(/%3A/g, ':').replace(/%2F/g, '/');
         var encodedMovieImageLink = encodeURIComponent(movieImageLink).replace(/%3A/g, ':').replace(/%2F/g, '/');
 
-        // Construct the URL string with proper formatting
         var generatedURL = '[' + movieTitle + '](https://discord.nfp.is/?v=' + encodedMovieLink + '&i=' + encodedMovieImageLink + ')';
 
         var resultContainer = document.getElementById('result');
