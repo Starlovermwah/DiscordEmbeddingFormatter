@@ -10,12 +10,12 @@
         background: url('https://i.ibb.co/kymGbGq/OIG4.jpg') no-repeat center center fixed;
         background-size: cover;
         background-color: #000;
-        color: #00ffff; /* Neon blue color */
+        color: #00ffff; 
         padding: 20px;
     }
     .form-container {
         max-width: 500px;
-        background-color: rgba(0, 0, 0, 0.8); /* Transparent black background */
+        background-color: rgba(0, 0, 0, 0.8); 
         border-radius: 10px;
         padding: 20px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -35,14 +35,14 @@
     .form-group input[type="text"] {
         width: calc(100% - 12px);
         padding: 8px;
-        border: 1px solid #00ffff; /* Neon blue border */
+        border: 1px solid #00ffff; 
         border-radius: 5px;
         font-size: 16px;
-        background-color: rgba(0, 0, 0, 0.5); /* Transparent black background */
-        color: #00ffff; /* Neon blue text */
+        background-color: rgba(0, 0, 0, 0.5); 
+        color: #00ffff; 
     }
     .form-group input[type="submit"] {
-        background-color: #00ffff; /* Neon blue background */
+        background-color: #00ffff; 
         color: black;
         border: none;
         padding: 10px 20px;
@@ -54,14 +54,14 @@
         cursor: pointer;
     }
     .generated-url {
-        background-color: rgba(0, 0, 0, 0.5); /* Transparent black background */
+        background-color: rgba(0, 0, 0, 0.5); 
         padding: 15px;
         border-radius: 5px;
         margin-top: 15px;
         font-size: 14px;
         line-height: 1.6;
         overflow-wrap: break-word;
-        color: #00ffff; /* Neon blue text */
+        color: #00ffff; 
     }
 </style>
 </head>
@@ -86,7 +86,6 @@
         </div>
     </form>
     <div id="result" class="generated-url" style="display: none;">
-        <!-- Generated Movie URL will appear here -->
     </div>
 </div>
 
@@ -98,11 +97,9 @@
         var movieLink = document.getElementById('movieLink').value;
         var movieImageLink = document.getElementById('movieImageLink').value;
 
-        // Encode the parameters in the URL
         var encodedMovieLink = encodeURIComponent(movieLink).replace(/%3A/g, ':').replace(/%2F/g, '/');
         var encodedMovieImageLink = encodeURIComponent(movieImageLink).replace(/%3A/g, ':').replace(/%2F/g, '/');
 
-        // Construct the URL string with proper formatting
         var generatedURL = '[' + movieTitle + '](https://discord.nfp.is/?v=' + encodedMovieLink + '&i=' + encodedMovieImageLink + ')';
 
         var resultContainer = document.getElementById('result');
