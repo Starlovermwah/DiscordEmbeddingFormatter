@@ -7,5 +7,5 @@ Details
 - Different styles to choose from in the homepage
 
 Crediting
-- Tool pages and style made by Movielord
+- Tool pages and style made by SpaghettiMast3r
 - I did the index
