@@ -4,7 +4,7 @@
 - **Website for PC: [Here](https://starlovermwah.github.io/Discord-embed-format/)**
 - **Website for Mobile Deivces: [Here](https://starlovermwah.github.io/Discord-embed-format/Mobile.html)**
 
-Details
+**Details**
 - GUI
 - Allows use of either API Key for backdrop or custom
 - Easy to use
