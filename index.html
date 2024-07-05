@@ -15,7 +15,7 @@
         margin: 0;
     }
     .form-container {
-        max-width: 800px;
+        max-width: 1200px;
         background-image: url('https://img.freepik.com/premium-photo/light-blue-color-toned-square-sheet-paper_696657-29418.jpg');
         background-size: cover;
         background-repeat: no-repeat;
@@ -33,18 +33,22 @@
     }
     .form-group {
         margin-bottom: 15px;
+        text-align: center;
     }
     .form-group label {
         font-weight: bold;
         display: block;
         margin-bottom: 5px;
+        text-align: center;
     }
     .form-group input[type="text"], .form-group textarea {
-        width: calc(100% - 12px);
+        width: calc(100% - 16px);
         padding: 8px;
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 16px;
+        box-sizing: border-box;
+        margin-top: 8px;
     }
     .form-group input[type="submit"] {
         background-color: #4CAF50;
@@ -57,6 +61,7 @@
         font-size: 16px;
         border-radius: 5px;
         cursor: pointer;
+        margin-top: 20px;
     }
     .generated-url {
         background-color: #f0f0f0;
@@ -66,16 +71,34 @@
         font-size: 14px;
         line-height: 1.6;
         overflow-wrap: break-word;
+        grid-column: span 2;
+        display: none;
+        text-align: center;
+    }
+    .backdrop-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+        justify-items: center;
     }
     .banner-results {
-        margin-top: 10px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(200px, 1fr));
+        gap: 40px;
     }
     .banner-results img {
-        max-width: 100%;
+        width: 100%;
         height: auto;
-        margin-bottom: 10px;
-        border-radius: 5px;
+        max-width: 100%;
+        object-fit: cover;
+        border-radius: 10px;
         cursor: pointer;
+        border: 2px solid transparent;
+        transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+    .banner-results img.selected {
+        border-color: #4CAF50;
+        transform: scale(1.1);
     }
     .embed-selector {
         grid-column: span 2;
@@ -90,10 +113,11 @@
     .embed-iframe {
         grid-column: span 2;
         text-align: center;
+        margin-top: 20px;
     }
     .embed-iframe iframe {
         width: 100%;
-        height: 600px;
+        height: 700px;
         border: none;
         border-radius: 5px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -102,30 +126,36 @@
 </head>
 <body>
 <div class="form-container">
-    <h2>Discord Embed Formatter</h2>
+    <h2>Discord Embed Formatter made by Starlover</h2>
     <form id="movieForm" enctype="multipart/form-data">
         <div class="form-group">
             <label for="apiKey"><a href="https://www.themoviedb.org/settings/api" target="_blank">TMDB API Key</a>:</label>
             <input type="text" id="apiKey" name="apiKey">
         </div>
         <div class="form-group">
-            <label for="movieTitle">Movie Title:</label>
+            <label for="movieTitle">Movie Name:</label>
             <input type="text" id="movieTitle" name="movieTitle">
         </div>
         <div class="form-group">
-            <label for="movieLink">Movie Link (has to be .mp4, x264):</label>
+            <label for="movieLink">Movie Link:</label>
             <input type="text" id="movieLink" name="movieLink">
         </div>
         <div class="form-group">
-            <label for="backdropSearch">Backdrop Image Searcher:</label>
+            <label for="backdropSearch">Backdrop Image Search:</label>
             <input type="text" id="backdropSearch" name="backdropSearch" placeholder="Enter movie title to search for backdrop images">
-            <div id="backdropResults" class="banner-results"></div>
+        </div>
+        <div class="form-group">
+            <label for="customBackdropLink">Custom Backdrop URL:</label>
+            <input type="text" id="customBackdropLink" name="customBackdropLink" placeholder="Enter custom backdrop image URL">
         </div>
         <div class="form-group">
             <input type="submit" value="Generate Movie URL">
         </div>
     </form>
-    <div id="result" class="generated-url" style="display: none;"></div>
+    <div class="backdrop-container">
+        <div id="backdropResults" class="banner-results"></div>
+    </div>
+    <div id="result" class="generated-url"></div>
     <div class="embed-selector">
         <label for="embedPage">Select Fileditch Page:</label>
         <select id="embedPage">
@@ -134,7 +164,7 @@
         </select>
     </div>
     <div class="embed-iframe">
-        <h2>Embedded Page</h2>
+        <h2>Fileditch Page</h2>
         <iframe id="embedFrame" title="Embedded Page"></iframe>
     </div>
 </div>
@@ -149,44 +179,29 @@
         var apiKey = document.getElementById('apiKey').value.trim();
         var movieTitle = document.getElementById('movieTitle').value.trim();
         var movieLink = document.getElementById('movieLink').value.trim();
+        var selectedBackdrop = document.querySelector('.banner-results img.selected');
+        var customBackdropLink = document.getElementById('customBackdropLink').value.trim();
 
         var encodedMovieLink = movieLink ? encodeURIComponent(movieLink).replace(/%3A/g, ':').replace(/%2F/g, '/') : '';
 
         var backdropResultsContainer = document.getElementById('backdropResults');
-        backdropResultsContainer.innerHTML = '';
 
-        if (apiKey) {
-            if (movieTitle) {
-                fetchMovieData(movieTitle, apiKey)
-                    .then(data => {
-                        if (data.results.length > 0) {
-                            var movieId = data.results[0].id;
-                            return fetchMovieBackdrops(movieId, apiKey);
-                        } else {
-                            throw new Error('Movie not found');
-                        }
-                    })
-                    .then(backdrops => {
-                        backdrops.forEach(backdrop => {
-                            var img = document.createElement('img');
-                            img.src = `https://image.tmdb.org/t/p/w1280${backdrop.file_path}`;
-                            img.alt = backdrop.file_path;
-                            img.onclick = function() {
-                                document.getElementById('backdropSearch').value = backdrop.file_path;
-                                backdropResultsContainer.innerHTML = '';
-                            };
-                            backdropResultsContainer.appendChild(img);
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error fetching movie data:', error);
-                    });
+        if (movieTitle) {
+            if (customBackdropLink && customBackdropLink !== '') {
+                var generatedURL = `[${movieTitle}](https://discord.nfp.is/?v=${encodedMovieLink}&i=${customBackdropLink})`;
+                displayGeneratedURL(generatedURL);
+            } else if (apiKey && selectedBackdrop) {
+                var selectedImagePath = selectedBackdrop.getAttribute('data-image-path');
+                var tmdbImageUrl = 'https://image.tmdb.org/t/p/w1280/';
+                var generatedURL = `[${movieTitle}](https://discord.nfp.is/?v=${encodedMovieLink}&i=${tmdbImageUrl}${selectedImagePath})`;
+                displayGeneratedURL(generatedURL);
+            } else {
+                var generatedURL = `[${movieTitle}](https://discord.nfp.is/?v=${encodedMovieLink})`;
+                displayGeneratedURL(generatedURL);
             }
+        } else {
+            console.error('Movie title is required');
         }
-
-        var tmdbImageUrl = 'https://image.tmdb.org/t/p/w1280/';
-        var generatedURL = movieTitle ? '[' + movieTitle + '](https://discord.nfp.is/?v=' + encodedMovieLink + '&i=' + tmdbImageUrl + document.getElementById('backdropSearch').value + ')' : '';
-        displayGeneratedURL(generatedURL);
     });
 
     function displayGeneratedURL(url) {
@@ -217,7 +232,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.backdrops) {
-                    return data.backdrops;
+                    return data.backdrops.slice(0, 9);
                 } else {
                     throw new Error('Backdrops not found');
                 }
@@ -227,6 +242,9 @@
     document.getElementById('backdropSearch').addEventListener('input', function() {
         var query = this.value;
         var apiKey = document.getElementById('apiKey').value.trim();
+        var backdropResultsContainer = document.getElementById('backdropResults');
+        backdropResultsContainer.innerHTML = '';
+
         if (query.trim() !== '') {
             fetchMovieData(query, apiKey)
                 .then(data => {
@@ -238,16 +256,14 @@
                     }
                 })
                 .then(backdrops => {
-                    var backdropResultsContainer = document.getElementById('backdropResults');
-                    backdropResultsContainer.innerHTML = '';
-
                     backdrops.forEach(backdrop => {
                         var img = document.createElement('img');
                         img.src = `https://image.tmdb.org/t/p/w1280${backdrop.file_path}`;
                         img.alt = backdrop.file_path;
+                        img.setAttribute('data-image-path', backdrop.file_path);
                         img.onclick = function() {
-                            document.getElementById('backdropSearch').value = backdrop.file_path;
-                            backdropResultsContainer.innerHTML = '';
+                            document.querySelectorAll('.banner-results img').forEach(img => img.classList.remove('selected'));
+                            this.classList.add('selected');
                         };
                         backdropResultsContainer.appendChild(img);
                     });
