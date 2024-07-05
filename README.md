@@ -1,6 +1,7 @@
 *Quick tool to format links in the format of a discord embed*
 
-**Website: [Here](https://starlovermwah.github.io/Discord-embed-format/)**
+**Website for PC: [Here](https://starlovermwah.github.io/Discord-embed-format/)**
+**Website for Mobile Deivces: [Here](https://starlovermwah.github.io/Discord-embed-format/Mobile.html)**
 
 Details
 - GUI
