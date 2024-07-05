@@ -4,8 +4,9 @@
 
 Details
 - GUI
-- Different styles to choose from in the homepage
+- Requires API Key
+- Easy to use
 
 Crediting
 - Tool pages and style made by SpaghettiMast3r
-- I did the index
+- Starlover did the index
