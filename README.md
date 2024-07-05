@@ -4,9 +4,5 @@
 
 Details
 - GUI
-- Requires API Key
+- Allows use of either API Key for backdrop or custom
 - Easy to use
-
-Crediting
-- Tool pages and style made by SpaghettiMast3r
-- Starlover did the index
