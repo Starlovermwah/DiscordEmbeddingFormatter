@@ -20,7 +20,7 @@ body {
 
 .form-container h2 {
     font-family: 'Playfair Display', serif;
-    color: #ff79c6;
+    color: #b30000;
     text-align: center;
     font-size: 2rem;
     margin: 0;
@@ -52,11 +52,11 @@ body {
 }
 
 .form-group input[type="text"]:focus {
-    border-color: #ff79c6;
+    border-color: #b30000;
 }
 
 .form-group input[type="submit"] {
-    background-color: #ff79c6;
+    background-color: #b30000;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -67,7 +67,7 @@ body {
 }
 
 .form-group input[type="submit"]:hover {
-    background-color: #f8a5c2;
+    background-color: #b30000;
     transform: scale(1.05);
 }
 
@@ -109,7 +109,7 @@ body {
 }
 
 .banner-results img.selected {
-    border-color: #ff79c6;
+    border-color: #b30000;
     transform: scale(1.1);
 }
 
@@ -168,8 +168,8 @@ body {
 }
 
 .radio-container input[type="radio"]:checked + label {
-    background-color: #ff79c6;
-    border-color: #ff79c6;
+    background-color: #b30000;
+    border-color: #b30000;
     color: #fff;
 }
 
