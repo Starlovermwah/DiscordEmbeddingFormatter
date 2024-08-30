@@ -1,4 +1,4 @@
-*Quick tool to format links in the format of a discord embed*
+**Quick tool to format links in the format of a discord embed**
 
 **Details**
 - GUI
