@@ -22,8 +22,6 @@
             <div class="form-group">
                 <label>Backdrop Option</label>
                 <div class="radio-container">
-                    <input type="radio" id="noBackdropOption" name="backdropOption" value="none" checked>
-                    <label for="noBackdropOption">No Backdrop</label>
                     <input type="radio" id="backdropSearchOption" name="backdropOption" value="search">
                     <label for="backdropSearchOption">Search for Backdrop Image</label>
                     <input type="radio" id="customBackdropOption" name="backdropOption" value="custom">
@@ -56,7 +54,7 @@
             <p>- For your embed you can choose whether you want a background or not. For a background search, you will need an API key (Which can be found via the hyperlink.) Otherwise, you may just use any custom image URL.</p>
             <p>- Click on the result to get the link once you have gone through the process. Send it to Discord afterward.</p>
             <p>Note: not all links work such as youtube, google drive etc.</p>
-            <p>- Credits to <a href="https://discord.nfp.is/" class="info-link">DiscordNFP</a> for the ability to embed.</p>
+            <p>- Credits to <a href="https://discord.nfp.is/" class="info-link">Discord nfp</a> for the ability to embed.</p>
             <p>- Credits to <a href="https://www.themoviedb.org/" class="info-link">TMDB</a> for the backdrops.</p>
         </div>
     </div>
@@ -83,26 +81,20 @@
                 return;
             }
 
-            if (backdropOption.value === 'search') {
-                if (!apiKey || !selectedBackdrop) {
-                    alert('Please enter your TMDB API Key and select a backdrop image.');
-                    return;
-                }
+            if (backdropOption && backdropOption.value === 'search' && selectedBackdrop) {
                 backdropURL = 'https://image.tmdb.org/t/p/original' + selectedBackdrop.getAttribute('data-image-path');
-            } else if (backdropOption.value === 'custom') {
-                if (!customBackdropLink) {
-                    alert('Please enter a custom backdrop URL.');
-                    return;
-                }
+            } else if (backdropOption && backdropOption.value === 'custom' && customBackdropLink) {
                 backdropURL = customBackdropLink;
             }
 
             var encodedMovieLink = encodeURIComponent(movieLink);
             var generatedURL = `https://discord.nfp.is/?v=${encodedMovieLink}`;
             if (backdropURL) {
-                generatedURL += `&background=${encodeURIComponent(backdropURL)}`;
+                generatedURL += `&i=${encodeURIComponent(backdropURL)}`;
             }
-            displayGeneratedURL(generatedURL);
+            
+            var markdownResult = `[${movieTitle}](${generatedURL})`;
+            displayGeneratedURL(markdownResult);
         });
 
         document.querySelectorAll('.radio-container input[type="radio"]').forEach(option => {
@@ -119,10 +111,6 @@
                     apiKeyContainer.style.display = 'none';
                     backdropSearchContainer.style.display = 'none';
                     customBackdropContainer.style.display = 'block';
-                } else {
-                    apiKeyContainer.style.display = 'none';
-                    backdropSearchContainer.style.display = 'none';
-                    customBackdropContainer.style.display = 'none';
                 }
             });
         });
