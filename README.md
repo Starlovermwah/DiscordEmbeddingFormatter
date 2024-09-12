@@ -11,3 +11,7 @@
 - The images and videos must end in a file type. Only [.MP4](https://www.cloudflare.com/learning/video/what-is-mp4/)
 - The Video must be a x264 encoded video aswell otherwise you will most likely get no video and only sound
 - This isn't an embedded **message system**, its an embedded **Video** system
+
+# Inquiries
+- Contact me via email at `starlover@starlover.online` if any issues occur
+
